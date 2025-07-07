@@ -1,20 +1,15 @@
 const name = document.getElementById("name").value;
-const birthDate = document.getElementById("birthDate").value;
-const birthTime = document.getElementById("birthTime").value;
-const birthPlace = document.getElementById("birthPlace").value;
+const birth = document.getElementById("birthDate").value;  // ✅ 修正済み
+const time = document.getElementById("birthTime").value;   // ✅ 修正済み
+const place = document.getElementById("birthPlace").value; // ✅ 修正済み
 const gender = document.getElementById("gender").value;
 
-const res = await fetch("https://astro-api-yp6x.onrender.com/get_zodiac", {
+const res = await fetch("https://astro-api-vp6x.onrender.com/get_zodiac", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    name: name,
-    birth: birthDate,
-    time: birthTime,
-    place: birthPlace,
-    gender: gender
-  })
+  body: JSON.stringify({ name, birth, time, place, gender })
 });
+
 
 const characters = {
   aries: {
