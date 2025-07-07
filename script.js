@@ -115,6 +115,8 @@ document.addEventListener("DOMContentLoaded", () => {
       frontImg.src = chara.img;
       resultName.textContent = `${chara.name}（${venusSign}）`;
 
+　　　document.getElementById("cardContainer").classList.remove("hidden");
+      
       // 表示開始（裏からスタート → 表に回転）
       card.classList.remove("hidden");
       card.classList.remove("spinIn"); // 一度クラスを外す
