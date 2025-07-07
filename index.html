@@ -9,11 +9,11 @@
 <body>
   <div class="container">
     <h1>ホロスコープ キャラクター診断</h1>
-    <form id="astroForm">
+    <form id="form">
       <input type="text" id="name" placeholder="名前" required>
-      <input type="date" id="birthDate" required>
-      <input type="time" id="birthTime" required>
-      <input type="text" id="birthPlace" placeholder="出生地" required>
+      <input type="date" id="birth" required>
+      <input type="time" id="time" required>
+      <input type="text" id="place" placeholder="出生地" required>
       <select id="gender" required>
         <option value="">性別を選択</option>
         <option value="female">女性</option>
@@ -23,14 +23,21 @@
     </form>
 
     <div id="cardContainer" class="hidden">
+      <div id="resultName"></div>
+
       <div class="card" id="card">
-        <div class="card-inner">
-          <div class="card-front"><img id="frontImg" src="" alt="表面画像"></div>
-          <div class="card-back"><img id="backImg" src="" alt="裏面画像"></div>
+        <div id="cardInner" class="card-inner">
+          <div class="card-face front">
+            <img id="cardFrontImg" src="" alt="表面画像">
+          </div>
+          <div class="card-face back">
+            <img id="cardBackImg" src="img/back.jpg" alt="裏面画像">
+          </div>
         </div>
       </div>
-      <button id="detailBtn" class="hidden">詳細を見る</button>
-      <div id="description" class="hidden"></div>
+
+      <button id="detailButton" class="hidden">▶ 詳細を見る</button>
+      <p id="description" class="hidden"></p>
     </div>
   </div>
 
