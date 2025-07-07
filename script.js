@@ -79,7 +79,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch("https://astro-api-yp6x.onrender.com/get_zodiac", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, date: birth, time, lat: 35.6895, lon: 139.6917 }) // 仮の東京座標（place未使用）
+        body: JSON.stringify({ name, date: birth, time, lat: 35.6895, lon: 139.6917 }) // 仮の東京座標
       });
 
       if (!res.ok) throw new Error("APIエラー");
@@ -98,15 +98,12 @@ document.addEventListener("DOMContentLoaded", () => {
       resultName.textContent = `${chara.name}（${venusSign}）`;
 
       cardContainer.classList.remove("hidden");
-      cardInner.classList.remove("spinIn");
-      void cardInner.offsetWidth;
-      cardInner.classList.add("spinIn");
 
-　　　// 一定時間後に元に戻して表面で止める
-　　　setTimeout(() => {
-  　　cardInner.classList.remove("spinIn");
-　　　}, 1500); // CSSで設定しているtransform 1sと合わせる
-      
+      // アニメーションリセット
+      card.classList.remove("spinIn");
+      void card.offsetWidth; // 強制再描画
+      card.classList.add("spinIn");
+
       description.classList.add("hidden");
       detailButton.classList.remove("hidden");
 
