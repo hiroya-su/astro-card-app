@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Venus Zodiac Card</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>ホロスコープ キャラクター診断</h1>
+    <form id="astroForm">
+      <input type="text" id="name" placeholder="名前" required>
+      <input type="date" id="birthDate" required>
+      <input type="time" id="birthTime" required>
+      <input type="text" id="birthPlace" placeholder="出生地" required>
+      <select id="gender" required>
+        <option value="">性別を選択</option>
+        <option value="female">女性</option>
+        <option value="male">男性</option>
+      </select>
+      <button type="submit">占う</button>
+    </form>
+
+    <div id="cardContainer" class="hidden">
+      <div class="card" id="card">
+        <div class="card-inner">
+          <div class="card-front"><img id="frontImg" src="" alt="表面画像"></div>
+          <div class="card-back"><img id="backImg" src="" alt="裏面画像"></div>
+        </div>
+      </div>
+      <button id="detailBtn" class="hidden">詳細を見る</button>
+      <div id="description" class="hidden"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
