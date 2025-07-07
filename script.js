@@ -121,5 +121,3 @@ document.addEventListener("DOMContentLoaded", () => {
     detailButton.classList.add("hidden");
   });
 });
-  });
-});
