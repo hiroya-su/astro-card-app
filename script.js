@@ -7,12 +7,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultName = document.getElementById("resultName");
   const detailButton = document.getElementById("detailButton");
   const description = document.getElementById("description");
+  const flipSound = document.getElementById("flipSound");
 
   const locationMap = {
     "埼玉県": { lat: 35.8574, lon: 139.6489 },
     "東京都": { lat: 35.6895, lon: 139.6917 },
-    "大阪府": { lat: 34.6937, lon: 135.5023 },
-    // 必要なら追加してください
+    "大阪府": { lat: 34.6937, lon: 135.5023 }
+    // 必要に応じて追加
   };
 
   const characters = {
@@ -66,6 +67,18 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  // 音の初回再生権限を取得（ユーザークリック必須）
+  let audioUnlocked = false;
+  document.body.addEventListener("click", () => {
+    if (!audioUnlocked && flipSound) {
+      flipSound.play().then(() => {
+        flipSound.pause();
+        flipSound.currentTime = 0;
+        audioUnlocked = true;
+      }).catch(() => {});
+    }
+  }, { once: true });
+
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -75,11 +88,19 @@ document.addEventListener("DOMContentLoaded", () => {
     const place = document.getElementById("place").value;
     const gender = document.getElementById("gender").value;
 
+    const loc = locationMap[place] || { lat: 35.6895, lon: 139.6917 }; // デフォルトは東京
+
     try {
       const res = await fetch("https://astro-api-yp6x.onrender.com/get_zodiac", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, date: birth, time, lat: 35.6895, lon: 139.6917 }) // 仮の東京座標
+        body: JSON.stringify({
+          name,
+          date: birth,
+          time,
+          lat: loc.lat,
+          lon: loc.lon
+        })
       });
 
       if (!res.ok) throw new Error("APIエラー");
@@ -98,13 +119,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
       cardContainer.classList.remove("hidden");
 
-      // 音再生
-      flipSound.currentTime = 0;
-      flipSound.play();
+      if (flipSound) {
+        flipSound.currentTime = 0;
+        flipSound.play().catch(() => {});
+      }
 
-      // アニメーション再実行
+      // カードアニメーション
       cardInner.classList.remove("spinIn");
-      void cardInner.offsetWidth;
+      void cardInner.offsetWidth; // 強制再描画
       cardInner.classList.add("spinIn");
 
       description.classList.add("hidden");
