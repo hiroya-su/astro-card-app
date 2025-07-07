@@ -106,3 +106,6 @@ button:hover {
     opacity: 1;
   }
 }
+.spinIn {
+  animation: spinIn 2s ease-in-out forwards;
+}
