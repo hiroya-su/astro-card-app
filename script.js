@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", () => {
     const gender = document.getElementById("gender").value;
 
     try {
-      const res = await fetch("https://astro-api-vp6x.onrender.com/get_zodiac", {
+      const res = await fetch("https://astro-api-yp6x.onrender.com/get_zodiac", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name, birth, time, place, gender })
