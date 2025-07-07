@@ -62,9 +62,9 @@ form.addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const name = document.getElementById("name").value;
-  const birth = document.getElementById("birthDate").value;
-  const time = document.getElementById("birthTime").value;
-  const place = document.getElementById("birthPlace").value;
+  const birth = document.getElementById("birth").value;
+  const time = document.getElementById("time").value;
+  const place = document.getElementById("place").value;
   const gender = document.getElementById("gender").value;
 
   try {
@@ -108,7 +108,7 @@ detailButton.addEventListener("click", function () {
   const sign = text.match(/（(.+?)）/)[1].toLowerCase();
   const gender = document.getElementById("gender").value;
   const chara = characters[sign][gender];
-  description.textContent = `${chara.name} の詳細説明（仮）`;
+  description.textContent = chara.desc;
   description.classList.remove("hidden");
   detailButton.classList.add("hidden");
 });
