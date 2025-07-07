@@ -39,7 +39,10 @@ form.addEventListener("submit", async function (e) {
   });
 
   const data = await res.json();
-  const venusSign = data["金星"].toLowerCase();
+　console.log(data); // ← 一度確認するために追加
+
+　const venusSign = data["金星"]?.toLowerCase(); // 金星が無ければ undefined → エラーになる
+
   const chara = characters[venusSign]?.[gender];
 
   if (!chara) {
