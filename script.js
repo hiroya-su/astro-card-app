@@ -102,6 +102,11 @@ document.addEventListener("DOMContentLoaded", () => {
       void cardInner.offsetWidth;
       cardInner.classList.add("spinIn");
 
+　　　// 一定時間後に元に戻して表面で止める
+　　　setTimeout(() => {
+  　　cardInner.classList.remove("spinIn");
+　　　}, 1500); // CSSで設定しているtransform 1sと合わせる
+      
       description.classList.add("hidden");
       detailButton.classList.remove("hidden");
 
