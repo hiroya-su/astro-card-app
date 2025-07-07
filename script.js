@@ -1,11 +1,20 @@
-const form = document.getElementById("astroForm");
-const cardContainer = document.getElementById("cardContainer");
-const cardInner = document.querySelector(".card-inner");
-const frontImg = document.getElementById("frontImg");
-const backImg = document.getElementById("backImg");
-const resultName = document.getElementById("resultName");
-const description = document.getElementById("description");
-const detailButton = document.getElementById("detailBtn");
+const name = document.getElementById("name").value;
+const birthDate = document.getElementById("birthDate").value;
+const birthTime = document.getElementById("birthTime").value;
+const birthPlace = document.getElementById("birthPlace").value;
+const gender = document.getElementById("gender").value;
+
+const res = await fetch("https://astro-api-yp6x.onrender.com/get_zodiac", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    name: name,
+    birth: birthDate,
+    time: birthTime,
+    place: birthPlace,
+    gender: gender
+  })
+});
 
 const characters = {
   aries: {
