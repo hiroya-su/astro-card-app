@@ -1,11 +1,11 @@
 const form = document.querySelector("form");
-const frontImg = document.getElementById("front-img");
-const backImg = document.getElementById("back-img");
-const resultName = document.getElementById("result-name");
-const cardContainer = document.querySelector(".card");
+const frontImg = document.getElementById("frontImg");
+const backImg = document.getElementById("backImg");
 const cardInner = document.querySelector(".card-inner");
+const cardContainer = document.getElementById("cardContainer");
+const resultName = document.getElementById("result-name");
+const detailButton = document.getElementById("detailBtn");
 const description = document.getElementById("description");
-const detailButton = document.getElementById("detail-button");
 
 const characters = {
   aries: {
@@ -59,8 +59,6 @@ const characters = {
 };
 
 form.addEventListener("submit", async function (e) {
-
-form.addEventListener("submit", async function (e) {
   e.preventDefault();
 
   const name = document.getElementById("name").value;
@@ -76,22 +74,17 @@ form.addEventListener("submit", async function (e) {
       body: JSON.stringify({ name, birth, time, place, gender })
     });
 
-    if (!res.ok) {
-      throw new Error(`APIエラー: ${res.status}`);
-    }
+    if (!res.ok) throw new Error("APIエラー");
 
     const data = await res.json();
-    console.log(data); // レスポンス確認用
-
     const venusSign = data["金星"]?.toLowerCase();
 
     if (!venusSign || !characters[venusSign] || !characters[venusSign][gender]) {
-      alert("金星の星座データが不正です。");
+      alert("キャラクターが見つかりませんでした。");
       return;
     }
 
     const chara = characters[venusSign][gender];
-
     frontImg.src = chara.img;
     backImg.src = chara.img;
     resultName.textContent = `${chara.name}（${venusSign}）`;
@@ -104,9 +97,9 @@ form.addEventListener("submit", async function (e) {
     description.classList.add("hidden");
     detailButton.classList.remove("hidden");
 
-  } catch (error) {
-    console.error("占いエラー:", error);
-    alert("エラーが発生しました。入力内容をご確認ください。");
+  } catch (err) {
+    console.error(err);
+    alert("データの取得に失敗しました。");
   }
 });
 
@@ -115,7 +108,7 @@ detailButton.addEventListener("click", function () {
   const sign = text.match(/（(.+?)）/)[1].toLowerCase();
   const gender = document.getElementById("gender").value;
   const chara = characters[sign][gender];
-  description.textContent = chara.name + " の詳細説明（仮）";
+  description.textContent = `${chara.name} の詳細説明（仮）`;
   description.classList.remove("hidden");
   detailButton.classList.add("hidden");
 });
