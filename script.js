@@ -70,26 +70,16 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
 
     const name = document.getElementById("name").value;
-    const birth = document.getElementById("birth").value;  // yyyy/mm/dd
+    const birth = document.getElementById("birth").value;
     const time = document.getElementById("time").value;
     const place = document.getElementById("place").value;
     const gender = document.getElementById("gender").value;
-
-    const location = locationMap[place] || { lat: 35.0, lon: 135.0 };
 
     try {
       const res = await fetch("https://astro-api-yp6x.onrender.com/get_zodiac", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name: name,
-          date: birth,
-          time: time,
-          lat: location.lat,
-          lon: location.lon,
-          gender: gender,
-          worry: ""
-        })
+        body: JSON.stringify({ name, date: birth, time, lat: 35.6895, lon: 139.6917 }) // 仮の東京座標（place未使用）
       });
 
       if (!res.ok) throw new Error("APIエラー");
@@ -103,8 +93,8 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const chara = characters[venusSign][gender];
+
       frontImg.src = chara.img;
-      backImg.src = chara.img;
       resultName.textContent = `${chara.name}（${venusSign}）`;
 
       cardContainer.classList.remove("hidden");
@@ -129,5 +119,7 @@ document.addEventListener("DOMContentLoaded", () => {
     description.textContent = chara.desc;
     description.classList.remove("hidden");
     detailButton.classList.add("hidden");
+  });
+});
   });
 });
