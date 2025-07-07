@@ -18,6 +18,7 @@ body {
   margin: 20px auto;
   width: 250px;
   height: 400px;
+  position: relative;
 }
 
 .card-inner {
@@ -26,11 +27,11 @@ body {
   position: relative;
   transform-style: preserve-3d;
   transition: transform 1s;
-  transform: rotateY(180deg); /* 初期状態は裏面 */
+  transform: rotateY(180deg); /* 初期は裏面を見せる */
 }
 
 .card.spinIn .card-inner {
-  transform: rotateY(0deg); /* 回転して表面を表示 */
+  transform: rotateY(0deg); /* 表面に回転する */
 }
 
 .card-face {
