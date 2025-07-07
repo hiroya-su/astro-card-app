@@ -26,14 +26,11 @@ body {
   position: relative;
   transform-style: preserve-3d;
   transition: transform 1s;
-}
-
-.card-inner.spinIn {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg); /* 初期状態は裏面 */
 }
 
 .card.spinIn .card-inner {
-  transform: rotateY(180deg);
+  transform: rotateY(0deg); /* 回転して表面を表示 */
 }
 
 .card-face {
