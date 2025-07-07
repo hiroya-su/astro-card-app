@@ -1,83 +1,111 @@
-/* ベース設定 */
 body {
-  background-color: #0b0e2d;
-  color: #fff;
   font-family: 'Arial', sans-serif;
+  background: linear-gradient(to right, #1a1a2e, #16213e);
+  color: #fff;
   text-align: center;
   padding: 20px;
 }
 
 .container {
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto;
 }
 
-/* カード構造 */
+form input,
+form select,
+form button {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+}
+
+button {
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #45a049;
+}
+
 .card {
+  width: 300px;
+  height: 440px;
+  margin: 40px auto;
   perspective: 1000px;
-  margin: 20px auto;
-  width: 250px;
-  height: 400px;
+  animation: glowEntry 2s ease-out;
 }
 
 .card-inner {
   width: 100%;
   height: 100%;
   position: relative;
+  transition: transform 1.5s;
   transform-style: preserve-3d;
-  transition: transform 1s;
+  animation: spinIn 2s ease-in-out forwards;
 }
 
-.card.spinIn .card-inner {
-  transform: rotateY(180deg);
-}
-
-.card-face {
-  position: absolute;
+.card-front,
+.card-back {
   width: 100%;
   height: 100%;
+  border-radius: 16px;
+  position: absolute;
   backface-visibility: hidden;
-  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
-.card-face img {
+.card-front img,
+.card-back img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  border-radius: 16px;
 }
 
-.front {
-  z-index: 2;
-}
-
-.back {
+.card-back {
   transform: rotateY(180deg);
 }
 
-/* ボタンと説明 */
-button {
-  margin-top: 10px;
-  padding: 10px 20px;
-  background: #4CAF50;
-  border: none;
-  color: #fff;
-  font-size: 1rem;
-  border-radius: 5px;
-  cursor: pointer;
+#description {
+  margin-top: 20px;
+  font-size: 18px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 15px;
+  border-radius: 12px;
 }
 
 .hidden {
   display: none;
 }
 
-#resultName {
-  font-size: 1.2rem;
-  margin-bottom: 10px;
+@keyframes spinIn {
+  0% {
+    transform: rotateY(0deg);
+  }
+  50% {
+    transform: rotateY(540deg);
+  }
+  100% {
+    transform: rotateY(720deg);
+  }
 }
 
-#description {
-  margin-top: 10px;
-  font-size: 1rem;
+@keyframes glowEntry {
+  0% {
+    box-shadow: 0 0 0px #fff;
+    opacity: 0;
+  }
+  100% {
+    box-shadow: 0 0 30px 10px gold;
+    opacity: 1;
+  }
+}
+.spinIn {
+  animation: spinIn 2s ease-in-out forwards;
 }
