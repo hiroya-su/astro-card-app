@@ -57,7 +57,7 @@ body {
 }
 
 .back {
-  transform: rotateY(180deg);
+  transform: rotateY(270deg);
 }
 
 /* ボタンと説明 */
