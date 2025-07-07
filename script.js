@@ -1,13 +1,14 @@
-const form = document.querySelector("form");
-const frontImg = document.getElementById("frontImg");
-const backImg = document.getElementById("backImg");
-const cardInner = document.querySelector(".card-inner");
-const cardContainer = document.getElementById("cardContainer");
-const resultName = document.getElementById("result-name");
-const detailButton = document.getElementById("detailButton");
-const description = document.getElementById("description");
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.querySelector("form");
+  const frontImg = document.getElementById("cardFrontImg");
+  const backImg = document.getElementById("cardBackImg");
+  const cardInner = document.querySelector(".card-inner");
+  const cardContainer = document.getElementById("cardContainer");
+  const resultName = document.getElementById("resultName");
+  const detailButton = document.getElementById("detailButton");
+  const description = document.getElementById("description");
 
-const characters = {
+  const characters = {
   aries: {
     male: { name: "炎舞武者（えんぶのもののふ）", img: "img/aries_m.jpg", desc: "🔥熱血で行動的なキャラ！" },
     female: { name: "炎の童子（ほのおのどうじ）", img: "img/aries_f.jpg", desc: "🔥情熱に満ちた純粋な心の持ち主！" }
@@ -58,57 +59,58 @@ const characters = {
   }
 };
 
-form.addEventListener("submit", async function (e) {
-  e.preventDefault();
+  form.addEventListener("submit", async function (e) {
+    e.preventDefault();
 
-  const name = document.getElementById("name").value;
-  const birth = document.getElementById("birth").value;
-  const time = document.getElementById("time").value;
-  const place = document.getElementById("place").value;
-  const gender = document.getElementById("gender").value;
+    const name = document.getElementById("name").value;
+    const birth = document.getElementById("birth").value;
+    const time = document.getElementById("time").value;
+    const place = document.getElementById("place").value;
+    const gender = document.getElementById("gender").value;
 
-  try {
-    const res = await fetch("https://astro-api-vp6x.onrender.com/get_zodiac", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ name, birth, time, place, gender })
-    });
+    try {
+      const res = await fetch("https://astro-api-vp6x.onrender.com/get_zodiac", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ name, birth, time, place, gender })
+      });
 
-    if (!res.ok) throw new Error("APIエラー");
+      if (!res.ok) throw new Error("APIエラー");
 
-    const data = await res.json();
-    const venusSign = data["金星"]?.toLowerCase();
+      const data = await res.json();
+      const venusSign = data["金星"]?.toLowerCase();
 
-    if (!venusSign || !characters[venusSign] || !characters[venusSign][gender]) {
-      alert("キャラクターが見つかりませんでした。");
-      return;
+      if (!venusSign || !characters[venusSign] || !characters[venusSign][gender]) {
+        alert("キャラクターが見つかりませんでした。");
+        return;
+      }
+
+      const chara = characters[venusSign][gender];
+      frontImg.src = chara.img;
+      backImg.src = chara.img;
+      resultName.textContent = `${chara.name}（${venusSign}）`;
+
+      cardContainer.classList.remove("hidden");
+      cardInner.classList.remove("spinIn");
+      void cardInner.offsetWidth;
+      cardInner.classList.add("spinIn");
+
+      description.classList.add("hidden");
+      detailButton.classList.remove("hidden");
+
+    } catch (err) {
+      console.error(err);
+      alert("データの取得に失敗しました。");
     }
+  });
 
-    const chara = characters[venusSign][gender];
-    frontImg.src = chara.img;
-    backImg.src = chara.img;
-    resultName.textContent = `${chara.name}（${venusSign}）`;
-
-    cardContainer.classList.remove("hidden");
-    cardInner.classList.remove("spinIn");
-    void cardInner.offsetWidth;
-    cardInner.classList.add("spinIn");
-
-    description.classList.add("hidden");
-    detailButton.classList.remove("hidden");
-
-  } catch (err) {
-    console.error(err);
-    alert("データの取得に失敗しました。");
-  }
-});
-
-detailButton.addEventListener("click", function () {
-  const text = resultName.textContent;
-  const sign = text.match(/（(.+?)）/)[1].toLowerCase();
-  const gender = document.getElementById("gender").value;
-  const chara = characters[sign][gender];
-  description.textContent = chara.desc;
-  description.classList.remove("hidden");
-  detailButton.classList.add("hidden");
+  detailButton.addEventListener("click", function () {
+    const text = resultName.textContent;
+    const sign = text.match(/（(.+?)）/)[1].toLowerCase();
+    const gender = document.getElementById("gender").value;
+    const chara = characters[sign][gender];
+    description.textContent = chara.desc;
+    description.classList.remove("hidden");
+    detailButton.classList.add("hidden");
+  });
 });
