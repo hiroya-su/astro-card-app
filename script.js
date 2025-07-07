@@ -3,18 +3,33 @@ document.addEventListener("DOMContentLoaded", () => {
   const frontImg = document.getElementById("cardFrontImg");
   const backImg = document.getElementById("cardBackImg");
   const cardInner = document.querySelector(".card-inner");
-  const cardContainer = document.getElementById("cardContainer");
+  const card = document.querySelector(".card");
   const resultName = document.getElementById("resultName");
   const detailButton = document.getElementById("detailButton");
   const description = document.getElementById("description");
-  const flipSound = document.getElementById("flipSound");
-  const flipSound = new Audio("sound/flip.mp3"); 
+
+  // 音ファイルを読み込み
+  const flipSound = new Audio("sound/flip.mp3");
+
+  // 最初は裏面（rotateY(0deg) = 背面）から
+  card.classList.remove("spinIn");
+
+  // 音を有効化（ユーザークリックで1回だけ）
+  let audioUnlocked = false;
+  document.body.addEventListener("click", () => {
+    if (!audioUnlocked) {
+      flipSound.play().then(() => {
+        flipSound.pause();
+        flipSound.currentTime = 0;
+        audioUnlocked = true;
+      }).catch(() => {});
+    }
+  }, { once: true });
 
   const locationMap = {
     "埼玉県": { lat: 35.8574, lon: 139.6489 },
     "東京都": { lat: 35.6895, lon: 139.6917 },
     "大阪府": { lat: 34.6937, lon: 135.5023 }
-    // 必要に応じて追加
   };
 
   const characters = {
@@ -68,18 +83,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
-  // 音の初回再生権限を取得（ユーザークリック必須）
-  let audioUnlocked = false;
-  document.body.addEventListener("click", () => {
-    if (!audioUnlocked && flipSound) {
-      flipSound.play().then(() => {
-        flipSound.pause();
-        flipSound.currentTime = 0;
-        audioUnlocked = true;
-      }).catch(() => {});
-    }
-  }, { once: true });
-
   form.addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -95,13 +98,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch("https://astro-api-yp6x.onrender.com/get_zodiac", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          name,
-          date: birth,
-          time,
-          lat: loc.lat,
-          lon: loc.lon
-        })
+        body: JSON.stringify({ name, date: birth, time, lat: loc.lat, lon: loc.lon })
       });
 
       if (!res.ok) throw new Error("APIエラー");
@@ -118,17 +115,15 @@ document.addEventListener("DOMContentLoaded", () => {
       frontImg.src = chara.img;
       resultName.textContent = `${chara.name}（${venusSign}）`;
 
-      cardContainer.classList.remove("hidden");
+      // 表示開始（裏からスタート → 表に回転）
+      card.classList.remove("hidden");
+      card.classList.remove("spinIn"); // 一度クラスを外す
+      void card.offsetWidth; // 強制再描画
+      card.classList.add("spinIn");
 
-      if (flipSound) {
-        flipSound.currentTime = 0;
-        flipSound.play().catch(() => {});
-      }
-
-      // カードアニメーション
-      cardInner.classList.remove("spinIn");
-      void cardInner.offsetWidth; // 強制再描画
-      cardInner.classList.add("spinIn");
+      // 音を再生
+      flipSound.currentTime = 0;
+      flipSound.play().catch(() => {});
 
       description.classList.add("hidden");
       detailButton.classList.remove("hidden");
