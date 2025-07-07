@@ -7,13 +7,20 @@ document.addEventListener("DOMContentLoaded", () => {
   const resultName = document.getElementById("resultName");
   const detailButton = document.getElementById("detailButton");
   const description = document.getElementById("description");
+  const flipSound = document.getElementById("flipSound");
 
-  const locationMap = {
-    "埼玉県": { lat: 35.8574, lon: 139.6489 },
-    "東京都": { lat: 35.6895, lon: 139.6917 },
-    "大阪府": { lat: 34.6937, lon: 135.5023 },
-    // 必要なら追加してください
-  };
+  let audioUnlocked = false;
+
+  document.body.addEventListener("click", () => {
+    // 初回クリックで再生許可
+    if (!audioUnlocked) {
+      flipSound.play().then(() => {
+        flipSound.pause();
+        flipSound.currentTime = 0;
+        audioUnlocked = true;
+      }).catch(() => {});
+    }
+  }, { once: true });
 
   const characters = {
     aries: {
@@ -79,7 +86,7 @@ document.addEventListener("DOMContentLoaded", () => {
       const res = await fetch("https://astro-api-yp6x.onrender.com/get_zodiac", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name, date: birth, time, lat: 35.6895, lon: 139.6917 }) // 仮の東京座標
+        body: JSON.stringify({ name, date: birth, time, lat: 35.6895, lon: 139.6917 }) // 東京仮固定
       });
 
       if (!res.ok) throw new Error("APIエラー");
@@ -100,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
       // 音再生
       flipSound.currentTime = 0;
-      flipSound.play();
+      flipSound.play().catch(() => {});
 
       // アニメーション再実行
       cardInner.classList.remove("spinIn");
