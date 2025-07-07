@@ -4,7 +4,7 @@ const backImg = document.getElementById("backImg");
 const cardInner = document.querySelector(".card-inner");
 const cardContainer = document.getElementById("cardContainer");
 const resultName = document.getElementById("result-name");
-const detailButton = document.getElementById("detailBtn");
+const detailButton = document.getElementById("detailButton");
 const description = document.getElementById("description");
 
 const characters = {
