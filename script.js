@@ -93,16 +93,19 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       const chara = characters[venusSign][gender];
-
       frontImg.src = chara.img;
       resultName.textContent = `${chara.name}（${venusSign}）`;
 
       cardContainer.classList.remove("hidden");
 
-      // アニメーションリセット
-      card.classList.remove("spinIn");
-      void card.offsetWidth; // 強制再描画
-      card.classList.add("spinIn");
+      // 音再生
+      flipSound.currentTime = 0;
+      flipSound.play();
+
+      // アニメーション再実行
+      cardInner.classList.remove("spinIn");
+      void cardInner.offsetWidth;
+      cardInner.classList.add("spinIn");
 
       description.classList.add("hidden");
       detailButton.classList.remove("hidden");
