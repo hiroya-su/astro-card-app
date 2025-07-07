@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const detailButton = document.getElementById("detailButton");
   const description = document.getElementById("description");
   const flipSound = document.getElementById("flipSound");
+  const flipSound = new Audio("sound/flip.mp3"); 
 
   const locationMap = {
     "埼玉県": { lat: 35.8574, lon: 139.6489 },
