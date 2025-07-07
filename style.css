@@ -153,3 +153,10 @@ button {
   margin-top: 10px;
   font-size: 1rem;
 }
+/* 回転演出：初期状態は裏面、spinInで表に */
+.card:not(.spinIn) .card-inner {
+  transform: rotateY(180deg);
+}
+.card.spinIn .card-inner {
+  transform: rotateY(0deg);
+}
