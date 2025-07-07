@@ -28,6 +28,10 @@ body {
   transition: transform 1s;
 }
 
+.card-inner.spinIn {
+  transform: rotateY(180deg);
+}
+
 .card.spinIn .card-inner {
   transform: rotateY(180deg);
 }
