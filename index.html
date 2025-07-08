@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <!-- 音声ファイルは body の最初に配置 -->
   <audio id="flipSound" src="sound/flip.mp3" preload="auto"></audio>
 
   <div class="container">
@@ -25,19 +24,21 @@
       <button type="submit">占う</button>
     </form>
 
-  <div id="cardContainer" class="hidden">
-    <div class="card">
-      <div class="card-inner">
-        <div class="card-face back">
-          <img id="cardBackImg" src="img/card_back.jpg" alt="裏面" />
-        </div>
-        <div class="card-face front">
-          <img id="cardFrontImg" src="" alt="表面" />
+    <div id="cardContainer" class="hidden">
+      <div class="card">
+        <div class="card-inner" id="cardInner">
+          <div class="card-face back">
+            <img id="cardBackImg" src="img/card_back.jpg" alt="裏面" />
+          </div>
+          <div class="card-face front">
+            <img id="cardFrontImg" src="" alt="表面" />
+          </div>
         </div>
       </div>
     </div>
-  </div>
-    
+
+    <div id="resultArea">
+      <div id="resultName" class="hidden"></div>
       <button id="detailButton" class="hidden">詳細を見る</button>
       <p id="description" class="hidden"></p>
     </div>
