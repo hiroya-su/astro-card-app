@@ -119,9 +119,9 @@ document.addEventListener("DOMContentLoaded", () => {
       
       // 表示開始（裏からスタート → 表に回転）
       card.classList.remove("hidden");
-      card.classList.remove("spinIn"); // 一度クラスを外す
-      void card.offsetWidth; // 強制再描画
-      card.classList.add("spinIn");
+      cardInner.classList.remove("spinIn"); // 一度クラスを外す
+      void cardInner.offsetWidth; // 強制再描画
+      cardInner.classList.add("spinIn");
 
       // 音を再生
       flipSound.currentTime = 0;
