@@ -107,25 +107,41 @@ button:hover {
 
 /* オーラの光エフェクト */
 /* オーラはカードコンテナの後ろに表示されるようにする */
-#cardContainer.has-aura::before {
+#cardContainer.has-aura::before,
+#cardContainer.has-aura::after { /* ::afterも追加 */
   content: "";
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 150%; /* カードより大きめに */
-  height: 150%; /* カードより大きめに */
-  background: radial-gradient(circle, rgba(255, 255, 200, 0.4), transparent 70%); /* 中心から外側に透明になるグラデーション */
   border-radius: 50%;
   transform: translate(-50%, -50%); /* 中央揃え */
   z-index: -1; /* カードの背後に配置 */
+  filter: blur(20px); /* ぼかし効果を強化 (例: 10pxから20pxへ) */
+  pointer-events: none; /* クリックイベントを透過させる */
+}
+
+#cardContainer.has-aura::before {
+  width: 200%; /* カードより大きめに (例: 150%から200%へ) */
+  height: 200%; /* カードより大きめに (例: 150%から200%へ) */
+  /* より明るく、中心が際立つグラデーション */
+  background: radial-gradient(circle at center, rgba(255, 255, 150, 0.6), rgba(255, 255, 200, 0.4) 30%, transparent 70%);
   animation: glow 2.5s infinite ease-in-out; /* 発光アニメーション */
-  filter: blur(10px); /* ぼかし効果でより柔らかい光に */
+}
+
+#cardContainer.has-aura::after { /* 2つ目のオーラ */
+  width: 150%; /* 少し小さめのオーラ */
+  height: 150%;
+  /* 異なる色や透明度で層を作る */
+  background: radial-gradient(circle at center, rgba(255, 200, 100, 0.4), rgba(255, 200, 50, 0.2) 30%, transparent 80%);
+  animation: glow-alt 3s infinite ease-in-out 0.5s; /* 別のタイミングで動かす */
+  z-index: -2; /* さらに後ろに配置 */
+  filter: blur(15px); /* ぼかし効果を少し弱め、層を出す */
 }
 
 @keyframes glow {
   0%, 100% {
     transform: translate(-50%, -50%) scale(0.9);
-    opacity: 0.6;
+    opacity: 0.8; /* より明るく */
   }
   50% {
     transform: translate(-50%, -50%) scale(1.1);
@@ -133,6 +149,19 @@ button:hover {
   }
 }
 
+/* 2つ目のオーラ用のアニメーション */
+@keyframes glow-alt {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(1.0);
+    opacity: 0.5;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.9;
+  }
+}
+
+/* その他の既存のCSSは変更なし */
 .hidden {
   display: none;
 }
