@@ -69,7 +69,7 @@ button:hover {
   position: absolute;
   transform-style: preserve-3d;
   transition: transform 1.5s ease-out; /* 回転アニメーションの時間とイージング */
-  transform-origin: left center; /* 左端を中心に回転 */
+  transform-origin: center center; /* 中央を中心に回転 */
 }
 
 /* めくる前のカードの状態 (裏面が見えている状態) */
