@@ -59,7 +59,7 @@ form button:hover {
   transition: transform 1.5s;
 }
 
-.card.spinIn {
+.card-inner.spinIn {
   animation: flipCard 1.2s forwards;
 }
 
