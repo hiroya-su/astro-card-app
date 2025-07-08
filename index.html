@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="ja">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Venus Zodiac Card</title>
-  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <audio id="flipSound" src="sound/flip.mp3" preload="auto"></audio>
@@ -12,10 +12,10 @@
   <div class="container">
     <h1>ホロスコープ キャラクター診断</h1>
     <form id="form">
-      <input type="text" id="name" placeholder="名前" required />
-      <input type="date" id="birth" required />
-      <input type="time" id="time" required />
-      <input type="text" id="place" placeholder="出生地" required />
+      <input type="text" id="name" placeholder="名前" required>
+      <input type="date" id="birth" required>
+      <input type="time" id="time" required>
+      <input type="text" id="place" placeholder="出生地" required>
       <select id="gender" required>
         <option value="">性別を選択</option>
         <option value="female">女性</option>
@@ -25,17 +25,20 @@
     </form>
 
     <div id="cardContainer" class="hidden">
-      <div id="resultName"></div>
       <div class="card">
         <div class="card-inner" id="cardInner">
+          <div class="card-face back">
+            <img id="cardBackImg" src="img/card_back.jpg" alt="裏面" />
+          </div>
           <div class="card-face front">
             <img id="cardFrontImg" src="" alt="表面" />
           </div>
-          <div class="card-face back aura">
-            <img id="cardBackImg" src="img/card_back.jpg" alt="裏面" />
-          </div>
         </div>
       </div>
+    </div>
+
+    <div id="resultArea">
+      <div id="resultName" class="hidden"></div>
       <button id="detailButton" class="hidden">詳細を見る</button>
       <p id="description" class="hidden"></p>
     </div>
