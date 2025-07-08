@@ -64,15 +64,14 @@ form button:hover {
   transform: rotateY(180deg);
 }
 
-.card-face {
+.card-face img {
   width: 100%;
   height: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  backface-visibility: hidden;
+  object-fit: contain; /* contain で収める */
+  display: block;
   border-radius: 16px;
-  overflow: hidden;
+  position: relative;
+  z-index: 2; /* 画像を前に */
 }
 
 .card-face.front {
@@ -92,20 +91,19 @@ form button:hover {
   z-index: 1;
 }
 
-/* オーラ演出：裏面だけ */
 .card-face.back::before {
   content: "";
   position: absolute;
-  top: 10%;
-  left: 10%;
-  width: 120%;
-  height: 120%;
-  border-radius: 16px;
-  background: radial-gradient(circle, rgba(255,215,0,0.6) 0%, rgba(255,215,0,0.2) 60%, transparent 80%);
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 255, 150, 0.6) 0%, rgba(255, 215, 0, 0.2) 60%, transparent 80%);
   animation: aura-glow 3s ease-in-out infinite;
-  z-index: 0;
+  z-index: 1; /* 画像の下、背景の上 */
   pointer-events: none;
-  filter: blur(10px);
+  filter: blur(20px);
 }
 
 @keyframes aura-glow {
