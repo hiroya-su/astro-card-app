@@ -14,14 +14,18 @@ body {
   max-width: 400px;
   width: 100%;
   padding: 20px;
+  text-align: center; /* フォーム要素を中央揃えにするため */
 }
 
-form input, form select, form button {
+form input,
+form select,
+form button {
   display: block;
   width: 100%;
   margin-bottom: 10px;
   padding: 10px;
   font-size: 1em;
+  box-sizing: border-box; /* paddingがwidthに含まれるように */
 }
 
 button {
@@ -29,40 +33,70 @@ button {
   color: white;
   border: none;
   cursor: pointer;
+  border-radius: 5px; /* ボタンに丸みを追加 */
 }
 
 button:hover {
   background-color: #218838;
 }
 
+#resultArea button {
+  margin-top: 15px; /* 詳細ボタンの上の余白 */
+}
+
+/* カードコンテナのスタイル */
+#cardContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 20px auto;
+  position: relative; /* オーラの基準点にする */
+}
+
+/* カード本体のスタイル */
 .card {
   width: 250px;
   height: 400px;
-  perspective: 1000px;
-  margin: 20px auto;
+  perspective: 1000px; /* 3D効果の視点 */
   position: relative;
+  transform-style: preserve-3d; /* 子要素が3D空間に存在するように */
 }
 
+/* カードのめくりアニメーションのラッパー */
 .card-inner {
   width: 100%;
   height: 100%;
-  position: relative;
+  position: absolute;
   transform-style: preserve-3d;
-  transition: transform 1s;
+  transition: transform 1.5s ease-out; /* 回転アニメーションの時間とイージング */
+  transform-origin: left center; /* 左端を中心に回転 */
 }
 
-.card.flip .card-inner {
-  transform: rotateY(180deg);
+/* めくる前のカードの状態 (裏面が見えている状態) */
+.card-inner.flipped {
+  transform: rotateY(-180deg); /* Y軸を中心に180度回転して表面を見せる */
 }
 
+/* カードの表面と裏面の共通スタイル */
 .card-face {
   position: absolute;
   width: 100%;
   height: 100%;
-  backface-visibility: hidden;
+  backface-visibility: hidden; /* 裏面がちらつかないようにする */
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+}
+
+/* カードの裏面 */
+.card-face.back {
+  /* 最初は裏面が見えるようにする（frontが-180degでbackが0degだと、backは正面、frontは後ろ側に来る） */
+  transform: rotateY(0deg);
+}
+
+/* カードの表面 */
+.card-face.front {
+  transform: rotateY(180deg); /* 裏面から見て180度回転した位置 */
 }
 
 .card-face img {
@@ -71,35 +105,46 @@ button:hover {
   object-fit: cover;
 }
 
-.card-face.back {
-  transform: rotateY(180deg);
-}
-
 /* オーラの光エフェクト */
-.aura::before {
+/* オーラはカードコンテナの後ろに表示されるようにする */
+#cardContainer.has-aura::before {
   content: "";
   position: absolute;
-  top: -10%;
-  left: -10%;
-  width: 120%;
-  height: 120%;
-  background: radial-gradient(circle, rgba(255,255,200,0.3), transparent 70%);
-  z-index: 0;
+  top: 50%;
+  left: 50%;
+  width: 150%; /* カードより大きめに */
+  height: 150%; /* カードより大きめに */
+  background: radial-gradient(circle, rgba(255, 255, 200, 0.4), transparent 70%); /* 中心から外側に透明になるグラデーション */
   border-radius: 50%;
-  animation: glow 2s infinite ease-in-out;
+  transform: translate(-50%, -50%); /* 中央揃え */
+  z-index: -1; /* カードの背後に配置 */
+  animation: glow 2.5s infinite ease-in-out; /* 発光アニメーション */
+  filter: blur(10px); /* ぼかし効果でより柔らかい光に */
 }
 
 @keyframes glow {
   0%, 100% {
-    transform: scale(1);
-    opacity: 0.5;
+    transform: translate(-50%, -50%) scale(0.9);
+    opacity: 0.6;
   }
   50% {
-    transform: scale(1.1);
+    transform: translate(-50%, -50%) scale(1.1);
     opacity: 1;
   }
 }
 
 .hidden {
   display: none;
+}
+
+/* 結果表示エリアのスタイル */
+#resultName {
+  font-size: 1.5em;
+  margin-top: 20px;
+  font-weight: bold;
+}
+
+#description {
+  margin-top: 15px;
+  line-height: 1.6;
 }
