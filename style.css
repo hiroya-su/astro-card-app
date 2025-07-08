@@ -1,54 +1,46 @@
 body {
-  font-family: 'Helvetica Neue', sans-serif;
-  background-color: #0d0d2b;
-  color: #fff;
   margin: 0;
-  padding: 20px;
+  font-family: sans-serif;
+  background-color: #0b0b30;
+  color: #fff;
   display: flex;
   justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  min-height: 100vh;
 }
 
 .container {
+  max-width: 400px;
   width: 100%;
-  max-width: 600px;
-  text-align: center;
+  padding: 20px;
 }
 
-h1 {
-  font-size: 2em;
-  margin-bottom: 20px;
-}
-
-form input,
-form select,
-form button {
+form input, form select, form button {
   display: block;
   width: 100%;
-  margin: 10px 0;
+  margin-bottom: 10px;
   padding: 10px;
   font-size: 1em;
-  border-radius: 8px;
-  border: none;
-  box-sizing: border-box;
 }
 
-form button {
+button {
   background-color: #28a745;
-  color: #fff;
+  color: white;
+  border: none;
   cursor: pointer;
-  transition: background-color 0.3s ease;
 }
 
-form button:hover {
+button:hover {
   background-color: #218838;
 }
 
 .card {
-  width: 100%;
-  max-width: 300px;
-  height: 450px;
-  margin: 40px auto;
-  perspective: 1200px;
+  width: 250px;
+  height: 400px;
+  perspective: 1000px;
+  margin: 20px auto;
+  position: relative;
 }
 
 .card-inner {
@@ -56,24 +48,21 @@ form button:hover {
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  transform: rotateY(0deg);
-  transition: transform 1.5s;
+  transition: transform 1s;
 }
 
-.card-inner.spinIn {
+.card.flip .card-inner {
   transform: rotateY(180deg);
 }
 
 .card-face {
   position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   backface-visibility: hidden;
-  border-radius: 16px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .card-face img {
@@ -82,59 +71,33 @@ form button:hover {
   object-fit: cover;
 }
 
-.card-face.front {
-  transform: rotateY(180deg);
-  z-index: 2;
-}
-
 .card-face.back {
-  transform: rotateY(0deg);
-  z-index: 1;
+  transform: rotateY(180deg);
 }
 
-/* オーラ演出（裏面） */
-.card-face.back::before {
+/* オーラの光エフェクト */
+.aura::before {
   content: "";
   position: absolute;
   top: -10%;
   left: -10%;
   width: 120%;
   height: 120%;
-  border-radius: 16px;
-  background: radial-gradient(circle, rgba(255,215,0,0.6) 0%, rgba(255,215,0,0.2) 60%, transparent 80%);
-  animation: aura-glow 3s ease-in-out infinite;
+  background: radial-gradient(circle, rgba(255,255,200,0.3), transparent 70%);
   z-index: 0;
-  pointer-events: none;
-  filter: blur(10px);
+  border-radius: 50%;
+  animation: glow 2s infinite ease-in-out;
 }
 
-@keyframes aura-glow {
-  0% {
+@keyframes glow {
+  0%, 100% {
     transform: scale(1);
-    opacity: 0.6;
+    opacity: 0.5;
   }
   50% {
-    transform: scale(1.05);
+    transform: scale(1.1);
     opacity: 1;
   }
-  100% {
-    transform: scale(1);
-    opacity: 0.6;
-  }
-}
-
-#resultName {
-  font-size: 1.2em;
-  font-weight: bold;
-  margin-top: 10px;
-}
-
-#description {
-  margin-top: 15px;
-  font-size: 1em;
-  background-color: rgba(255,255,255,0.1);
-  padding: 10px;
-  border-radius: 10px;
 }
 
 .hidden {
