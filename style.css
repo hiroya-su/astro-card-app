@@ -64,17 +64,26 @@ form button:hover {
   transform: rotateY(180deg); /* 表面を表示 */
 }
 
-/* ↓この部分削除（z-index） */
-.card-face.back {
-  transform: rotateY(0deg);
+.card-face {
+  width: 100%;
+  height: 100%;
   position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  overflow: hidden;
 }
 
 .card-face.front {
   transform: rotateY(180deg);
-  position: absolute;
+  z-index: 2; /* 表面が上に来る */
 }
 
+.card-face.back {
+  transform: rotateY(0deg);
+  z-index: 1; /* 裏面が下に来る */
+}
 
 /* オーラ演出：裏面だけ */
 .card-face.back::before {
@@ -87,7 +96,7 @@ form button:hover {
   border-radius: 16px;
   background: radial-gradient(circle, rgba(255,215,0,0.6) 0%, rgba(255,215,0,0.2) 60%, transparent 80%);
   animation: aura-glow 3s ease-in-out infinite;
-  z-index: 1;
+  z-index: 0;
   pointer-events: none;
   filter: blur(10px);
 }
@@ -106,6 +115,7 @@ form button:hover {
     opacity: 0.6;
   }
 }
+
 
 #resultName {
   font-size: 1.2em;
