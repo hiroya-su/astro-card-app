@@ -64,33 +64,35 @@ form button:hover {
   transform: rotateY(180deg);
 }
 
-.card-face img {
+.card-face {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain; /* contain で収める */
-  display: block;
+  backface-visibility: hidden;
   border-radius: 16px;
-  position: relative;
-  z-index: 2; /* 画像を前に */
-}
-
-.card-face.front {
-  transform: rotateY(180deg);
-}
-.card-face.back {
-  transform: rotateY(0deg);
+  overflow: hidden;
+  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
 }
 
 .card-face img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  display: block;
-  border-radius: 16px;
-  position: relative;
+}
+
+.card-face.front {
+  transform: rotateY(180deg);
+  z-index: 2;
+}
+
+.card-face.back {
+  transform: rotateY(0deg);
   z-index: 1;
 }
 
+/* オーラ演出（裏面） */
 .card-face.back::before {
   content: "";
   position: absolute;
@@ -121,11 +123,10 @@ form button:hover {
   }
 }
 
-
 #resultName {
   font-size: 1.2em;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-top: 10px;
 }
 
 #description {
