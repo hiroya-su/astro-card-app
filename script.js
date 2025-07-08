@@ -10,10 +10,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // 音ファイルを読み込み
   const flipSound = new Audio("sound/flip.mp3");
 
-  // 初期状態ではカードの裏面が見えるようにする
-  // CSSで初期状態を調整するため、JavaScriptでのクラス操作は不要になります
-  // cardInner.classList.remove("flipped"); // 必要であれば初期化時に記述
-
   // 音を有効化（ユーザークリックで1回だけ）
   let audioUnlocked = false;
   document.body.addEventListener("click", () => {
@@ -99,6 +95,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // オーラと結果表示をリセット
     cardContainer.classList.remove("has-aura");
+    // ここで `flipped` クラスを削除し、カードを裏面状態に戻す
+    cardInner.classList.remove("flipped"); // 追加
     resultName.classList.add("hidden");
     detailButton.classList.add("hidden");
     description.classList.add("hidden");
@@ -127,26 +125,31 @@ document.addEventListener("DOMContentLoaded", () => {
       // カードコンテナを表示
       cardContainer.classList.remove("hidden");
 
-      // カードをめくるアニメーションを開始
-      // まずカードを裏面が見える状態に戻してから、アニメーションを開始
-      cardInner.style.transform = "rotateY(0deg)"; // 一旦初期状態に戻す
-      void cardInner.offsetWidth; // 強制再描画（これがないとアニメーションが正しく動作しない場合がある）
-      cardInner.classList.add("flipped"); // めくりアニメーションを開始
+      // アニメーションを確実に動作させるために、短い遅延を入れる
+      // これにより、flippedクラスが削除された状態がレンダリングされてから、再度追加される
+      setTimeout(() => {
+        cardInner.classList.add("flipped"); // めくりアニメーションを開始
 
-      // めくり音を再生
-      flipSound.currentTime = 0;
-      flipSound.play().catch(() => {});
+        // めくり音を再生
+        flipSound.currentTime = 0;
+        flipSound.play().catch(() => {});
+      }, 50); // 50ミリ秒の遅延 (調整可能)
+
 
       // アニメーション完了後にオーラと結果を表示
-      cardInner.addEventListener(
-        "transitionend",
-        () => {
-          cardContainer.classList.add("has-aura"); // オーラエフェクトを追加
-          resultName.classList.remove("hidden");
-          detailButton.classList.remove("hidden");
-        },
-        { once: true } // 一度だけ実行
-      );
+      // イベントリスナーが複数回追加されないように、一度だけ実行されるようにする
+      const handleTransitionEnd = function() {
+        cardContainer.classList.add("has-aura"); // オーラエフェクトを追加
+        resultName.classList.remove("hidden");
+        detailButton.classList.remove("hidden");
+        // イベントリスナーを解除して、複数回発火するのを防ぐ
+        cardInner.removeEventListener("transitionend", handleTransitionEnd);
+      };
+
+      // 既にイベントリスナーが登録されている可能性があるので、一度削除してから追加
+      cardInner.removeEventListener("transitionend", handleTransitionEnd); // 追加
+      cardInner.addEventListener("transitionend", handleTransitionEnd); // 修正
+
     } catch (err) {
       console.error(err);
       alert("データの取得に失敗しました。");
