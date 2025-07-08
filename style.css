@@ -56,12 +56,30 @@ form button:hover {
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
-  transform: rotateY(0deg); /* 裏面から開始 */
+  transform: rotateY(0deg);
   transition: transform 1.5s;
 }
 
 .card-inner.spinIn {
-  transform: rotateY(180deg); /* 表面を表示 */
+  transform: rotateY(180deg);
+}
+
+.card-face {
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  backface-visibility: hidden;
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.card-face.front {
+  transform: rotateY(180deg);
+}
+.card-face.back {
+  transform: rotateY(0deg);
 }
 
 .card-face img {
@@ -72,16 +90,6 @@ form button:hover {
   border-radius: 16px;
   position: relative;
   z-index: 1;
-}
-
-.card-face.front {
-  transform: rotateY(180deg);
-  z-index: 2; /* 表面が上に来る */
-}
-
-.card-face.back {
-  transform: rotateY(0deg);
-  z-index: 1; /* 裏面が下に来る */
 }
 
 /* オーラ演出：裏面だけ */
@@ -95,7 +103,7 @@ form button:hover {
   border-radius: 16px;
   background: radial-gradient(circle, rgba(255,215,0,0.6) 0%, rgba(255,215,0,0.2) 60%, transparent 80%);
   animation: aura-glow 3s ease-in-out infinite;
-  z-index: 2;
+  z-index: 0;
   pointer-events: none;
   filter: blur(10px);
 }
