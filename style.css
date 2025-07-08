@@ -56,50 +56,25 @@ form button:hover {
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
+  transform: rotateY(0deg); /* 裏面から開始 */
   transition: transform 1.5s;
 }
 
 .card-inner.spinIn {
-  animation: flipCard 1.2s forwards;
+  transform: rotateY(180deg); /* 表面を表示 */
 }
 
-@keyframes flipCard {
-  0% {
-    transform: rotateY(0deg);
-  }
-  100% {
-    transform: rotateY(180deg);
-  }
-}
-
-.card-face {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  backface-visibility: hidden;
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 0 25px rgba(255, 255, 255, 0.2);
-}
-
-.card-face img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* 裏面 */
+/* ↓この部分削除（z-index） */
 .card-face.back {
   transform: rotateY(0deg);
-  position: relative;
-  z-index: 2;
+  position: absolute;
 }
 
-/* 表面 */
 .card-face.front {
   transform: rotateY(180deg);
-  z-index: 3;
+  position: absolute;
 }
+
 
 /* オーラ演出：裏面だけ */
 .card-face.back::before {
